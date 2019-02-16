@@ -15,7 +15,8 @@ class CreateTrucksTable extends Migration
     {
         Schema::create('trucks', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string('plate', 10)->unique();
+            $table->timestamp('archived_at')->nullable();
         });
     }
 

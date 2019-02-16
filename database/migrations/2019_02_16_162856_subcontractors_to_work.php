@@ -13,8 +13,10 @@ class SubcontractorsToWork extends Migration
      */
     public function up()
     {
-        Schema::table('work', function (Blueprint $table) {
-            //
+        Schema::create('subcontractors_to_work', function (Blueprint $table) {
+            $table->unsignedInteger('subcontractor_id');
+            $table->unsignedInteger('work_id');
+            $table->primary(["subcontractor_id","work_id"]);
         });
     }
 
@@ -25,8 +27,6 @@ class SubcontractorsToWork extends Migration
      */
     public function down()
     {
-        Schema::table('work', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('subcontractors_to_work');
     }
 }

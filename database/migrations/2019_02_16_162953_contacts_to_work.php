@@ -13,8 +13,10 @@ class ContactsToWork extends Migration
      */
     public function up()
     {
-        Schema::table('work', function (Blueprint $table) {
-            //
+        Schema::create('contacts_to_work', function (Blueprint $table) {
+            $table->unsignedInteger('employee_id');
+            $table->unsignedInteger('work_id');
+            $table->primary(["employee_id","work_id"]);
         });
     }
 
@@ -25,8 +27,6 @@ class ContactsToWork extends Migration
      */
     public function down()
     {
-        Schema::table('work', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('contacts_to_work');
     }
 }

@@ -15,7 +15,18 @@ class CreateWorksTable extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->unsignedInteger('customer_id');
+            $table->date('date')->nullable();
+            $table->time('time')->nullable();
+            $table->string('need')->nullable();
+            $table->string('address')->nullable();
+            $table->string('order_number', 100)->nullable();
+            $table->string('lead', 100);
+            $table->text('description');
+            $table->string('comment')->nullable();
+            $table->time('started_time')->nullable();
+            $table->time('ended_time')->nullable();
+            $table->timestamp('billed_at')->nullable();
         });
     }
 
