@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Truck;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
+use App\Truck;
 
 class TruckController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class TruckController extends Controller
      */
     public function index()
     {
-        //
+        $trucks = Truck::all()->sortBy('name');
+        return view('app.trucks.trucks', compact('trucks'));
     }
 
     /**
@@ -24,7 +32,7 @@ class TruckController extends Controller
      */
     public function create()
     {
-        //
+        return view('app.trucks.newtruck');
     }
 
     /**
@@ -35,7 +43,16 @@ class TruckController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'plate' => 'required',
+            'archived_at' => 'null'
+        ]);
+
+        $truck = new Truck;
+
+        $truck->plate = request('plate');
+        $truck->save();
+        return redirect('trucks');
     }
 
     /**
@@ -46,7 +63,7 @@ class TruckController extends Controller
      */
     public function show(Truck $truck)
     {
-        //
+        return view('app.trucks.truck', compact('truck'));
     }
 
     /**
@@ -57,7 +74,7 @@ class TruckController extends Controller
      */
     public function edit(Truck $truck)
     {
-        //
+        return view('app.trucks.edittruck', compact('truck'));
     }
 
     /**
@@ -69,7 +86,14 @@ class TruckController extends Controller
      */
     public function update(Request $request, Truck $truck)
     {
-        //
+        $this->validate(request(), [
+            'plate' => 'required',
+            'archived_at' => 'null'
+        ]);
+
+        $truck->plate = request('plate');
+        $truck->save();
+        return redirect('truck/'.$truck->id);
     }
 
     /**
@@ -80,6 +104,8 @@ class TruckController extends Controller
      */
     public function destroy(Truck $truck)
     {
-        //
+        $truck->archived_at = Carbon::now();
+        $truck->save();
+        return redirect('trucks');
     }
 }

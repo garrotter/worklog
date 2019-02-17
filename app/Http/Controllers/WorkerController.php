@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Worker;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
+use App\Worker;
 
 class WorkerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class WorkerController extends Controller
      */
     public function index()
     {
-        //
+        $workers = Worker::all()->sortBy('name');
+        return view('app.workers.workers', compact('workers'));
     }
 
     /**
@@ -24,7 +32,7 @@ class WorkerController extends Controller
      */
     public function create()
     {
-        //
+        return view('app.workers.newworker');
     }
 
     /**
@@ -35,7 +43,19 @@ class WorkerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'archived_at' => 'null'
+        ]);
+
+        $worker = new Worker;
+
+        $worker->name = request('name');
+        $worker->phone = request('phone');
+        $worker->email = request('email');
+        $worker->save();
+        return redirect('workers');
     }
 
     /**
@@ -46,7 +66,7 @@ class WorkerController extends Controller
      */
     public function show(Worker $worker)
     {
-        //
+        return view('app.workers.worker', compact('worker'));
     }
 
     /**
@@ -57,7 +77,7 @@ class WorkerController extends Controller
      */
     public function edit(Worker $worker)
     {
-        //
+        return view('app.workers.editworker', compact('worker'));
     }
 
     /**
@@ -69,7 +89,17 @@ class WorkerController extends Controller
      */
     public function update(Request $request, Worker $worker)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'archived_at' => 'null'
+        ]);
+
+        $worker->name = request('name');
+        $worker->phone = request('phone');
+        $worker->email = request('email');
+        $worker->save();
+        return redirect('worker/'.$worker->id);
     }
 
     /**
@@ -80,6 +110,10 @@ class WorkerController extends Controller
      */
     public function destroy(Worker $worker)
     {
-        //
+        $worker->archived_at = Carbon::now();
+        $worker->phone = NULL;
+        $worker->email = NULL;
+        $worker->save();
+        return redirect('workers');
     }
 }

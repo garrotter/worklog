@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
+use App\Company;
+use App\Employee;
 
 class EmployeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::all()->sortBy('name');
+        $companies = Company::all();
+        return view('app.employees.employees', compact('employees', 'companies'));
     }
 
     /**
@@ -24,7 +34,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        return view('app.employees.newemployee', compact('companies'));
     }
 
     /**
@@ -35,7 +46,21 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'company' => 'required',
+            'archived_at' => 'null'
+        ]);
+
+        $employee = new Employee;
+
+        $employee->name = request('name');
+        $employee->phone = request('phone');
+        $employee->email = request('email');
+        $employee->company_id = request('company');
+        $employee->save();
+        return redirect('employees');
     }
 
     /**
@@ -46,7 +71,8 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        $company = Company::all()->where('id', $employee->company_id);
+        return view('app.employees.employee', compact('company', 'employee'));
     }
 
     /**
@@ -57,7 +83,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $companies = Company::all();
+        return view('app.employees.editemployee', compact('employee', 'companies'));
     }
 
     /**
@@ -69,7 +96,19 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $this->validate(request(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'company' => 'required'
+        ]);
+
+        $employee->name = request('name');
+        $employee->phone = request('phone');
+        $employee->email = request('email');
+        $employee->company_id = request('company');
+        
+        $employee->save();
+        return redirect('employee/'.$employee->id);
     }
 
     /**
@@ -80,6 +119,10 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->archived_at = Carbon::now();
+        $employee->phone = NULL;
+        $employee->email = NULL;
+        $employee->save();
+        return redirect('employees');
     }
 }
