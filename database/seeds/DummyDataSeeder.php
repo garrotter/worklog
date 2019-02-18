@@ -24,5 +24,6 @@ class DummyDataSeeder extends Seeder
         $company = factory(App\Company::class, 15)->create();
         $employee = factory(App\Employee::class, 50)->create();
         $work = factory(App\Work::class, 50)->create();
+        $note = factory(App\Note::class, 15)->create();
     }
 }

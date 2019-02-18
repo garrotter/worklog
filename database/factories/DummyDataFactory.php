@@ -55,3 +55,10 @@ $factory->define(App\Work::class, function (Faker $faker) {
         'lead' => $faker->text($maxNbChars = 50)
     ];
 });
+
+$factory->define(App\Note::class, function (Faker $faker) {
+    return [
+        'date' => $faker->dateTimeThisMonth($max = 'now + 7 days'),
+        'note' => $faker->sentence($nbWords = 6, $variableNbWords = true)
+    ];
+});

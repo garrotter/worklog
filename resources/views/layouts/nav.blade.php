@@ -29,6 +29,15 @@
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="nav-item">
+                        <a class="nav-link" href="/notes">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Jegyzetek
+                        </a>
+                        <a class="nav-link" href="/note/new">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Új jegyzet
+                        </a>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="nav-item">
                         <a class="nav-link" href="/companies">
                             <i class="fa fa-building-o" aria-hidden="true"></i> Megrendelő cégek
                         </a>
