@@ -57,12 +57,12 @@
                         {{-- Notes --}}
                         @if (isset($notes) && !$notes->isEmpty())
                             <div class="row">
-                                <div class="col-10 ml-auto mr-auto alert alert-info" role="alert">
+                                <div class="col-10 mx-auto alert alert-info" role="alert">
                                     @foreach ($notes as $note)
                                         <div class="row">
                                             <div class="col-md-9">{!! $note->note !!}</div>
                                             <div class="col-md-3">
-                                                <a class="btn btn-info btn-sm btn-block" role="button" href="/notes/{{ $note->id }}/edit">
+                                                <a class="btn btn-info btn-sm btn-block" role="button" href="/note/{{ $note->id }}/edit">
                                                     Szerkesztés
                                                 </a>
                                             </div>

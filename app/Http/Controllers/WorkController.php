@@ -11,6 +11,7 @@ use App\Employee;
 use App\Worker;
 use App\Truck;
 use App\Subcontractor;
+use App\Note;
 
 class WorkController extends Controller
 {
@@ -31,8 +32,14 @@ class WorkController extends Controller
         } else {
             $day = request('selected_date');
         }
+
         $works = Work::all()->where('date','=', $day)->sortBy('time');
-        return view('app.works.works', compact('works', 'day'));
+
+        $daysdate = Carbon::parse($day)->format('d-m-Y');
+        $notes = array();
+        $notes = Note::all()->where('date', '=', $day);
+        
+        return view('app.works.works', compact('works', 'day', 'daysdate', 'notes'));
     }
 
     /**
