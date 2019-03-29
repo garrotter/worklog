@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Note;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class NoteController extends Controller
 {
@@ -22,13 +23,20 @@ class NoteController extends Controller
     {
         $uri =  $request->path();
         $today = Carbon::today()->toDateString();
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
 
-        if ($uri == 'allnotes') {
-            $notes = Note::all()->sortBy('date');
-        } elseif ($uri == 'notes') {
+        if ($uri == 'notes' && (!$startDate && !$endDate)) {
             $notes = Note::all()->where('date', '>=', Carbon::today()->toDateString())->sortBy('date');
+        } elseif ($uri == 'notes' && ($startDate || $endDate)){
+            if (!$startDate) { $startDate = '1900-01-01';}
+            if (!$endDate) { $endDate = $today;}
+            $notes = Note::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('date');
+        } else {
+            $notes = Note::all()->sortBy('date');
         }
-        return view('app.notes.notes', compact('notes', 'uri', 'today'));
+        
+        return view('app.notes.notes', compact('notes', 'uri', 'today', 'startDate', 'endDate'));
     }
 
     /**
@@ -52,13 +60,13 @@ class NoteController extends Controller
         $this->validate(request(), [
             'date' => 'required',
             'note' => 'required'
-        ]); 
-        
-        $note = new Note;
+        ]);
 
-        $note->date = request('date');
-        $note->note = request('note');
-        $note->save();
+        Note::create([
+            'date' => request('date'),
+            'note' => request('note')
+        ]);
+
         return redirect('notes');
     }
 
@@ -98,9 +106,12 @@ class NoteController extends Controller
             'note' => 'required'
         ]);
 
-        $note->date = request('date');
-        $note->note = request('note');
-        $note->save();
+        Note::where('id', $note->id)
+            ->update([
+                'date' => request('date'),
+                'note' => request('note')
+        ]);
+
         return redirect('notes');
     }
 
