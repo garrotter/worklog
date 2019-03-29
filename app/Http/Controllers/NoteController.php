@@ -60,13 +60,13 @@ class NoteController extends Controller
         $this->validate(request(), [
             'date' => 'required',
             'note' => 'required'
-        ]); 
-        
-        $note = new Note;
+        ]);
 
-        $note->date = request('date');
-        $note->note = request('note');
-        $note->save();
+        Note::create([
+            'date' => request('date'),
+            'note' => request('note')
+        ]);
+
         return redirect('notes');
     }
 
@@ -106,9 +106,12 @@ class NoteController extends Controller
             'note' => 'required'
         ]);
 
-        $note->date = request('date');
-        $note->note = request('note');
-        $note->save();
+        Note::where('id', $note->id)
+            ->update([
+                'date' => request('date'),
+                'note' => request('note')
+        ]);
+
         return redirect('notes');
     }
 
