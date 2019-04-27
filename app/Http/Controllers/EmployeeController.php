@@ -34,7 +34,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $companies = Company::all();
+        $companies = Company::all()->sortBy('name');
         return view('app.employees.newemployee', compact('companies'));
     }
 
@@ -83,7 +83,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        $companies = Company::all();
+        $companies = Company::all()->sortBy('name');
         return view('app.employees.editemployee', compact('employee', 'companies'));
     }
 
