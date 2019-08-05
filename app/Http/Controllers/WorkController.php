@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use App\Work;
 use App\Company;
@@ -25,21 +26,14 @@ class WorkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (!request('selected_date')) {
-            $day = Carbon::now()->format('Y-m-d');
-        } else {
-            $day = request('selected_date');
-        }
-
+        $day = $request->selected_date ?: Carbon::now()->format('Y-m-d');
         $works = Work::all()->where('date','=', $day)->sortBy('time');
-
-        $daysdate = Carbon::parse($day)->format('d-m-Y');
-        $notes = array();
+        $message = $works->isEmpty() ? 'Sajnos nincs munka!' : '';
         $notes = Note::all()->where('date', '=', $day);
         
-        return view('app.works.works', compact('works', 'day', 'daysdate', 'notes'));
+        return view('app.works.works', compact('works', 'day', 'notes', 'message'));
     }
 
     /**
@@ -49,12 +43,10 @@ class WorkController extends Controller
      */
     public function create()
     {
-        $companies = Company::all()->sortBy('name');
-        $employees = Employee::all()->sortBy('name');
-        $workers = Worker::all()->sortBy('name');
-        $subcontractors = Subcontractor::all()->sortBy('name');
-        $trucks = Truck::all()->sortBy('plate');
-        return view('app.works.newwork', compact('companies', 'employees', 'workers', 'subcontractors', 'trucks'));
+        $companies = Company::whereNull('archived_at')->get()->sortBy('name');
+        $employees = Employee::whereNull('archived_at')->get()->sortBy('name');
+
+        return view('app.works.newwork', compact('companies', 'employees'));
     }
 
     /**
@@ -68,11 +60,7 @@ class WorkController extends Controller
         $this->validate(request(), [
             'customer' => 'required',
             'description' => 'required',
-            'lead' => 'required',
-            'managed' => '0',
-            'started_time' => 'null',
-            'ended_time' => 'null',
-            'billed_at' => 'null'
+            'lead' => 'required'
         ]);
 
         $work = new Work;
@@ -116,11 +104,11 @@ class WorkController extends Controller
      */
     public function edit(Work $work)
     {
-        $companies = Company::all()->sortBy('name');
-        $employees = Employee::all()->sortBy('name');
-        $workers = Worker::all()->sortBy('name');
-        $subcontractors = Subcontractor::all()->sortBy('name');
-        $trucks = Truck::all()->sortBy('plate');
+        $companies = Company::whereNull('archived_at')->get()->sortBy('name');
+        $employees = Employee::whereNull('archived_at')->get()->sortBy('name');
+        $workers = Worker::whereNull('archived_at')->get()->sortBy('name');
+        $subcontractors = Subcontractor::whereNull('archived_at')->get()->sortBy('name');
+        $trucks = Truck::whereNull('archived_at')->get()->sortBy('plate');
         return view('app.works.editwork', compact('work', 'companies', 'employees', 'workers', 'subcontractors', 'trucks'));
     }
 
@@ -148,6 +136,8 @@ class WorkController extends Controller
         $work->date = request('date');
         $work->time = request('time');
         $work->lead = request('lead');
+        $work->started_time = request('started_time');
+        $work->ended_time = request('ended_time');
         $work->save();
 
         $work->contacts()->sync(request('contacts'), true);
@@ -170,7 +160,15 @@ class WorkController extends Controller
      */
     public function destroy(Work $work)
     {
+        $work = Work::findOrFail($work->id);
+
+        $work->workers()->detach();
+        $work->trucks()->detach();
+        $work->subcontractors()->detach();
+        $work->contacts()->detach();
+
         $work->delete();
+
         return redirect('works');
     }
 
@@ -184,6 +182,7 @@ class WorkController extends Controller
     {
         $work->billed_at = Carbon::now();
         $work->save();
+
         return redirect()->back();
     }
 
@@ -201,7 +200,9 @@ class WorkController extends Controller
             ->get()
             ->sortBy('date');
 
-        return view('app.works.works', compact('works', 'notes'));
+        $message = $works->isEmpty() ? 'Minden elvégzett munka ki van számlázva!' : 'Számlázandó munkák:';
+
+        return view('app.works.works', compact('works', 'message'));
     }
 
     /**
@@ -216,6 +217,30 @@ class WorkController extends Controller
             ->whereNull('date')
             ->get();
 
-        return view('app.works.works', compact('works', 'notes'));
+        $message = $works->isEmpty() ? 'Nincs függőben munka!' : 'Függőben lévő munkák:';
+
+        return view('app.works.works', compact('works', 'message'));
+    }
+
+    public function search(Request $request)
+    {
+        $companies = Company::whereNull('archived_at')->get()->sortBy('name');
+        $startDate = $request->startDate ?: Carbon::now()->startOfMonth();
+        $endDate = $request->endDate ?: Carbon::today()->toDateString();
+
+        if(!$request->startDate && !$request->endDate && !$request->customer){
+            return view('app.works.search', compact('companies', 'startDate', 'endDate'));
+        } else {
+            if ($request->customer) {
+                $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
+                    ->where('customer_id', $request->customer)->get()->sortBy('date');
+                $customerId = $request->customer;
+            } else {
+                $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('date');
+            }
+
+        }
+
+        return view('app.works.search', compact('companies', 'startDate', 'endDate', 'works'));
     }
 }
