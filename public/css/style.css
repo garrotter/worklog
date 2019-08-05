@@ -1,15 +1,26 @@
 @import url('../lib/font-awesome-4.7.0/css/font-awesome.min.css');
 @import url('../lib/summernote/summernote-bs4.css');
 
+:root {
+    --main-bg: rgb(245, 245, 245);
+    --main-color: rgb(248, 248, 255);
+    /* --second-bg: rgb(42, 63, 84); */
+    --second-bg: rgb(106, 118, 135); /* test site color */
+    --second-color: rgb(255, 255, 255);
+    --header-color: rgb(33, 33, 33);
+    --required-color: rgb(255, 0, 0);
+    --dropdown-divider: rgba(181, 189, 196, 0.5);
+    --list-bg: rgba(235, 235, 235, 0.1);
+}
+
 body {
     position: relative;
-    background: #f5f5f5;
+    background: var(--main-bg);
 }
 
 .bg-k2 {
-    /* background: #2a3f54; */
-    background: #99b898;
-    color: #fff;
+    background: var(--second-bg);
+    color: var(--second-color);
 }
 
 .sidebar-navbar {
@@ -39,7 +50,7 @@ p {
 }
 
 .card-header a, h2 a i.fa {
-    color: rgb(33, 33, 33);
+    color: var(--header-color);
 }
 
 i.fa {
@@ -47,10 +58,10 @@ i.fa {
 }
 
 .dropdown-divider-dark {
-    height:0;
-    margin:.5rem 0;
-    overflow:hidden;
-    border-top:1px solid rgba(181, 189, 196, 0.5)
+    height: 0;
+    margin: .5rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--dropdown-divider);
 }
 
 .todaysdate {
@@ -59,7 +70,7 @@ i.fa {
 }
 
 .required {
-    color: #ff0000;
+    color: var(--required-color);
 }
 
 .employee-list {
@@ -67,17 +78,17 @@ i.fa {
 }
 
 ul.list-group.list-group-striped li:nth-of-type(even){
-    background: rgba(235, 235, 235, 0.1);
+    background: var(--list-bg);
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .employee-list {
         font-size: 1em;
         padding-bottom: 5px;
     }
 }
 
-@media (max-width:992px) {
+@media (max-width: 992px) {
     .sidebar-navbar {
         position: relative;
         height: auto;
