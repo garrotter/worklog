@@ -11,6 +11,9 @@
     --required-color: rgb(255, 0, 0);
     --dropdown-divider: rgba(181, 189, 196, 0.5);
     --list-bg: rgba(235, 235, 235, 0.1);
+    --saturday-bg: rgb(255, 242, 222);
+    --sunday-bg: rgb(242, 184, 179);
+
 }
 
 body {
@@ -81,10 +84,54 @@ ul.list-group.list-group-striped li:nth-of-type(even){
     background: var(--list-bg);
 }
 
+table a {
+    display: block;
+    color: var(--header-color);
+}
+
+.table .thead-dark th {
+    background: var(--second-bg);
+}
+
+th, td {
+    width: 14.285%;
+}
+
+th a {
+    color: var(--main-color);
+}
+
+th a:hover {
+    color: var(--main-bg);
+}
+
+.table .thead-dark th.saturday {
+    background: var(--saturday-bg);
+}
+
+.table .thead-dark th.sunday {
+    background: var(--sunday-bg);
+}
+
+.table .thead-dark th.saturday a,
+.table .thead-dark th.sunday a {
+    color: var(--header-color);
+}
+
 @media (max-width: 768px) {
     .employee-list {
         font-size: 1em;
         padding-bottom: 5px;
+    }
+    .table {
+        font-size: .75em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    h5 {
+        font-size: 1em;
+        font-weight: bold;
     }
 }
 

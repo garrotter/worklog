@@ -233,14 +233,72 @@ class WorkController extends Controller
         } else {
             if ($request->customer) {
                 $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
-                    ->where('customer_id', $request->customer)->get()->sortBy('date');
+                    ->where('customer_id', $request->customer)->get()->sortBy('time')->sortBy('date');
                 $customerId = $request->customer;
             } else {
-                $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('date');
+                $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('time')->sortBy('date');
             }
 
         }
 
         return view('app.works.search', compact('companies', 'startDate', 'endDate', 'works'));
+    }
+
+    public function searchWorks($startDate, $endDate, $company) {
+        if($company) {
+            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
+            ->where('customer_id', $company)->get()->sortBy('time')->sortBy('date');
+        } else {
+            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('time')->sortBy('date');
+        }
+
+        return $works;
+    }
+
+    public function week(Request $request)
+    {
+        $monday = $request->start_date ? new Carbon($request->start_date) : Carbon::now()->startOfWeek();
+        $tuesday = (new Carbon($monday))->addDay(1);
+        $wednesday = (new Carbon($monday))->addDay(2);
+        $thursday =  (new Carbon($monday))->addDay(3);
+        $friday =  (new Carbon($monday))->addDay(4);
+        $saturday =  (new Carbon($monday))->addDay(5);
+        $sunday =  (new Carbon($monday))->addDay(6);
+
+        $company = '';
+        
+        $worksMonday = $this->searchWorks($monday, $monday, $company);
+        $worksTuesday = $this->searchWorks($tuesday, $tuesday, $company);
+        $worksWednesday = $this->searchWorks($wednesday, $wednesday, $company);
+        $worksThursday = $this->searchWorks($thursday, $thursday, $company);
+        $worksFriday = $this->searchWorks($friday, $friday, $company);
+        $worksSaturday = $this->searchWorks($saturday, $saturday, $company);
+        $worksSunday = $this->searchWorks($sunday, $sunday, $company);
+
+        $maxWork = 0;
+
+        if ($maxWork < count($worksMonday)) {
+            $maxWork = count($worksMonday);
+        }
+        if ($maxWork < count($worksTuesday)) {
+            $maxWork = count($worksTuesday);
+        }
+        if ($maxWork < count($worksWednesday)) {
+            $maxWork = count($worksWednesday);
+        }
+        if ($maxWork < count($worksThursday)) {
+            $maxWork = count($worksThursday);
+        }
+        if ($maxWork < count($worksFriday)) {
+            $maxWork = count($worksFriday);
+        }
+        if ($maxWork < count($worksSaturday)) {
+            $maxWork = count($worksSaturday);
+        }
+        if ($maxWork < count($worksSunday)) {
+            $maxWork = count($worksSunday);
+        }
+
+        return view('app.works.weekly', compact('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'worksMonday', 'worksTuesday', 'worksWednesday', 'worksThursday', 'worksFriday', 'worksSaturday', 'worksSunday', 'maxWork'));
     }
 }

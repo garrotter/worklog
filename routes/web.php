@@ -38,6 +38,7 @@ Route::get('/works/notbilled', 'WorkController@showNotBilled');
 Route::post('/work/{work}/billing', 'WorkController@billing');
 Route::get('/works/drafts', 'WorkController@showDrafts');
 Route::get('/works/search', 'WorkController@search');
+Route::get('/works/week', 'WorkController@week');
 
 Route::get('/workers', 'WorkerController@index');
 Route::get('/worker/new', 'WorkerController@create');
