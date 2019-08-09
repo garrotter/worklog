@@ -20,6 +20,29 @@ class WorkController extends Controller
     {
         $this->middleware('auth');
     }
+
+    private function searchWorks($startDate, $endDate, $company) 
+    {
+        if($company) {
+            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
+            ->where('customer_id', $company)->get()->sortBy('date')->sortBy('time');
+        } else {
+            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('date')->sortBy('time');
+        }
+
+        return $works;
+    }
+
+    private function worksArray($day)
+    {
+        $company = '';
+        $works = $this->searchWorks($day, $day, $company);
+        $arrayWorks = array();
+        foreach ($works as $work) {
+            array_push($arrayWorks, $work);
+        }
+        return $arrayWorks;
+    }
     
     /**
      * Display a listing of the resource.
@@ -244,17 +267,6 @@ class WorkController extends Controller
         return view('app.works.search', compact('companies', 'startDate', 'endDate', 'works'));
     }
 
-    public function searchWorks($startDate, $endDate, $company) {
-        if($company) {
-            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
-            ->where('customer_id', $company)->get()->sortBy('time')->sortBy('date');
-        } else {
-            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('time')->sortBy('date');
-        }
-
-        return $works;
-    }
-
     public function week(Request $request)
     {
         $monday = $request->start_date ? new Carbon($request->start_date) : Carbon::now()->startOfWeek();
@@ -265,15 +277,13 @@ class WorkController extends Controller
         $saturday =  (new Carbon($monday))->addDay(5);
         $sunday =  (new Carbon($monday))->addDay(6);
 
-        $company = '';
-        
-        $worksMonday = $this->searchWorks($monday, $monday, $company);
-        $worksTuesday = $this->searchWorks($tuesday, $tuesday, $company);
-        $worksWednesday = $this->searchWorks($wednesday, $wednesday, $company);
-        $worksThursday = $this->searchWorks($thursday, $thursday, $company);
-        $worksFriday = $this->searchWorks($friday, $friday, $company);
-        $worksSaturday = $this->searchWorks($saturday, $saturday, $company);
-        $worksSunday = $this->searchWorks($sunday, $sunday, $company);
+        $worksMonday= $this->worksArray($monday);
+        $worksTuesday= $this->worksArray($tuesday);
+        $worksWednesday= $this->worksArray($wednesday);
+        $worksThursday= $this->worksArray($thursday);
+        $worksFriday= $this->worksArray($friday);
+        $worksSaturday= $this->worksArray($saturday);
+        $worksSunday= $this->worksArray($sunday);
 
         $maxWork = 0;
 
@@ -298,6 +308,7 @@ class WorkController extends Controller
         if ($maxWork < count($worksSunday)) {
             $maxWork = count($worksSunday);
         }
+        
 
         return view('app.works.weekly', compact('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'worksMonday', 'worksTuesday', 'worksWednesday', 'worksThursday', 'worksFriday', 'worksSaturday', 'worksSunday', 'maxWork'));
     }

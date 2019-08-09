@@ -118,6 +118,10 @@ th a:hover {
     color: var(--header-color);
 }
 
+.table-bordered td {
+    border: 1px solid var(--header-color);
+}
+
 @media (max-width: 768px) {
     .employee-list {
         font-size: 1em;
