@@ -11,8 +11,8 @@
     --required-color: rgb(255, 0, 0);
     --dropdown-divider: rgba(181, 189, 196, 0.5);
     --list-bg: rgba(235, 235, 235, 0.1);
-    --saturday-bg: rgb(255, 242, 222);
-    --sunday-bg: rgb(242, 184, 179);
+    --restday-bg: rgb(255, 242, 222);
+    --holiday-bg: rgb(242, 184, 179);
 
 }
 
@@ -89,10 +89,6 @@ table a {
     color: var(--header-color);
 }
 
-.table .thead-dark th {
-    background: var(--second-bg);
-}
-
 th, td {
     width: 14.285%;
 }
@@ -105,16 +101,20 @@ th a:hover {
     color: var(--main-bg);
 }
 
-.table .thead-dark th.saturday {
-    background: var(--saturday-bg);
+.table .thead-dark th.workday {
+    background: var(--second-bg);
 }
 
-.table .thead-dark th.sunday {
-    background: var(--sunday-bg);
+.table .thead-dark th.restday {
+    background: var(--restday-bg);
 }
 
-.table .thead-dark th.saturday a,
-.table .thead-dark th.sunday a {
+.table .thead-dark th.holiday {
+    background: var(--holiday-bg);
+}
+
+.table .thead-dark th.restday a,
+.table .thead-dark th.holiday a {
     color: var(--header-color);
 }
 

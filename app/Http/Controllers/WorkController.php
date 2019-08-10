@@ -269,21 +269,29 @@ class WorkController extends Controller
 
     public function week(Request $request)
     {
-        $monday = $request->start_date ? new Carbon($request->start_date) : Carbon::now()->startOfWeek();
-        $tuesday = (new Carbon($monday))->addDay(1);
-        $wednesday = (new Carbon($monday))->addDay(2);
-        $thursday =  (new Carbon($monday))->addDay(3);
-        $friday =  (new Carbon($monday))->addDay(4);
-        $saturday =  (new Carbon($monday))->addDay(5);
-        $sunday =  (new Carbon($monday))->addDay(6);
+        $mon = $request->start_date ? new Carbon($request->start_date) : Carbon::now()->startOfWeek();
+        $tue = (new Carbon($mon))->addDay(1);
+        $wed = (new Carbon($mon))->addDay(2);
+        $thu =  (new Carbon($mon))->addDay(3);
+        $fri =  (new Carbon($mon))->addDay(4);
+        $sat =  (new Carbon($mon))->addDay(5);
+        $sun =  (new Carbon($mon))->addDay(6);
 
-        $worksMonday= $this->worksArray($monday);
-        $worksTuesday= $this->worksArray($tuesday);
-        $worksWednesday= $this->worksArray($wednesday);
-        $worksThursday= $this->worksArray($thursday);
-        $worksFriday= $this->worksArray($friday);
-        $worksSaturday= $this->worksArray($saturday);
-        $worksSunday= $this->worksArray($sunday);
+        $worksMonday= $this->worksArray($mon);
+        $worksTuesday= $this->worksArray($tue);
+        $worksWednesday= $this->worksArray($wed);
+        $worksThursday= $this->worksArray($thu);
+        $worksFriday= $this->worksArray($fri);
+        $worksSaturday= $this->worksArray($sat);
+        $worksSunday= $this->worksArray($sun);
+
+        $monday = app('App\Http\Controllers\DayController')->setDay($mon);
+        $tuesday = app('App\Http\Controllers\DayController')->setDay($tue);
+        $wednesday = app('App\Http\Controllers\DayController')->setDay($wed);
+        $thursday = app('App\Http\Controllers\DayController')->setDay($thu);
+        $friday = app('App\Http\Controllers\DayController')->setDay($fri);
+        $saturday = app('App\Http\Controllers\DayController')->setDay($sat);
+        $sunday = app('App\Http\Controllers\DayController')->setDay($sun);
 
         $maxWork = 0;
 
@@ -308,7 +316,6 @@ class WorkController extends Controller
         if ($maxWork < count($worksSunday)) {
             $maxWork = count($worksSunday);
         }
-        
 
         return view('app.works.weekly', compact('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'worksMonday', 'worksTuesday', 'worksWednesday', 'worksThursday', 'worksFriday', 'worksSaturday', 'worksSunday', 'maxWork'));
     }

@@ -10,19 +10,19 @@
                     <div class="row">
                         <div class="col-2 text-center">
                             <h2>
-                                <a href="/works/week?start_date={{ date('Y-m-d', strtotime($monday .' -1 week')) }}">
+                                <a href="/works/week?start_date={{ date('Y-m-d', strtotime($monday->date .' -1 week')) }}">
                                     <i class="fa fa-caret-left" aria-hidden="true"></i>
                                 </a>
                             </h2>
                         </div>
                         <div class="col-8">
                             <h2>
-                                {{ 'Hét: ' . $monday->format('W') }}
+                                {{ 'Hét: ' . $monday->date->format('W') }}
                             </h2>
                         </div>
                         <div class="col-2 text-center">
                             <h2>
-                                <a href="/works/week?start_date={{ date('Y-m-d', strtotime($monday .' +1 week')) }}">
+                                <a href="/works/week?start_date={{ date('Y-m-d', strtotime($monday->date .' +1 week')) }}">
                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                 </a>
                             </h2>
@@ -40,46 +40,46 @@
                 <table class="table table-bordered table-striped table-sm">
                     <thead class="thead-dark">
                         <tr class="text-center">
-                            <th>
-                                <a href="/works?selected_date={{ $monday->format('Y-m-d') }}">
+                            <th class="{{ !$monday->sd ? 'workday' : ($monday->sd==='r' ? 'restday' : ($monday->sd ==='h' ? 'holiday' : '')) }}">
+                                <a href="/works?selected_date={{ $monday->date->format('Y-m-d') }}">
                                     Hétfő<br>
-                                    {{ $monday->format('Y.m.d.') }}
+                                    {{ $monday->date->format('Y.m.d.') }}
                                 </a>
                             </th>
-                            <th>
-                                <a href="/works?selected_date={{ $tuesday->format('Y-m-d') }}">
+                            <th class="{{ !$tuesday->sd ? 'workday' : ($tuesday->sd==='r' ? 'restday' : ($tuesday->sd ==='h' ? 'holiday' : '')) }}">
+                                <a href="/works?selected_date={{ $tuesday->date->format('Y-m-d') }}">
                                     Kedd<br>
-                                    {{ $tuesday->format('Y.m.d.') }}
+                                    {{ $tuesday->date->format('Y.m.d.') }}
                                 </a>
                             </th>
-                            <th>
-                                <a href="/works?selected_date={{ $wednesday->format('Y-m-d') }}">
+                            <th class="{{ !$wednesday->sd ? 'workday' : ($wednesday->sd==='r' ? 'restday' : ($wednesday->sd ==='h' ? 'holiday' : '')) }}">
+                                <a href="/works?selected_date={{ $wednesday->date->format('Y-m-d') }}">
                                     Szerda<br>
-                                    {{ $wednesday->format('Y.m.d.') }}
+                                    {{ $wednesday->date->format('Y.m.d.') }}
                                 </a>
                             </th>
-                            <th>
-                                <a href="/works?selected_date={{ $thursday->format('Y-m-d') }}">
+                            <th class="{{ !$thursday->sd ? 'workday' : ($thursday->sd==='r' ? 'restday' : ($thursday->sd ==='h' ? 'holiday' : '')) }}">
+                                <a href="/works?selected_date={{ $thursday->date->format('Y-m-d') }}">
                                     Csütörtök<br>
-                                    {{ $thursday->format('Y.m.d.') }}
+                                    {{ $thursday->date->format('Y.m.d.') }}
                                 </a>
                             </th>
-                            <th>
-                                <a href="/works?selected_date={{ $friday->format('Y-m-d') }}">
+                            <th class="{{ !$friday->sd ? 'workday' : ($friday->sd==='r' ? 'restday' : ($friday->sd ==='h' ? 'holiday' : '')) }}">
+                                <a href="/works?selected_date={{ $friday->date->format('Y-m-d') }}">
                                     Péntek<br>
-                                    {{ $friday->format('Y.m.d.') }}
+                                    {{ $friday->date->format('Y.m.d.') }}
                                 </a>
                             </th>
-                            <th class="saturday">
-                                <a href="/works?selected_date={{ $saturday->format('Y-m-d') }}">
+                            <th class="{{ !$saturday->sd ? 'restday' : ($saturday->sd==='w' ? 'workday' : ($saturday->sd ==='h' ? 'holiday' : '')) }}">
+                                <a href="/works?selected_date={{ $saturday->date->format('Y-m-d') }}">
                                     Szombat<br>
-                                    {{ $saturday->format('Y.m.d.') }}
+                                    {{ $saturday->date->format('Y.m.d.') }}
                                 </a>
                             </th>
-                            <th class="sunday">
-                                <a href="/works?selected_date={{ $sunday->format('Y-m-d') }}">
+                            <th class="holiday">
+                                <a href="/works?selected_date={{ $sunday->date->format('Y-m-d') }}">
                                     Vasárnap<br>
-                                    {{ $sunday->format('Y.m.d.') }}
+                                    {{ $sunday->date->format('Y.m.d.') }}
                                 </a>
                             </th>
                         </tr>
