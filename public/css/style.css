@@ -1,15 +1,33 @@
 @import url('../lib/font-awesome-4.7.0/css/font-awesome.min.css');
-@import url('../lib/summernote/summernote-bs4.css');
+
+:root {
+    --main-bg: rgb(245, 245, 245);
+    --main-color: rgb(248, 248, 255);
+    /* site color */
+    /* --second-bg: rgb(42, 63, 84); */
+    /* test site color */
+    --second-bg: rgb(106, 118, 135);
+    /*--------------------------------*/
+    --second-color: rgb(255, 255, 255);
+    --header-color: rgb(33, 33, 33);
+    --required-color: rgb(255, 0, 0);
+    --dropdown-divider: rgba(181, 189, 196, 0.5);
+    --list-bg: rgba(235, 235, 235, 0.1);
+    --restday-bg: rgb(255, 242, 222);
+    --holiday-bg: rgb(242, 184, 179);
+    --note-tooltip-bg: rgb(108, 178, 235);
+    --note-tooltip-color: rgb(12, 84, 96);
+
+}
 
 body {
     position: relative;
-    background: #f5f5f5;
+    background: var(--main-bg);
 }
 
 .bg-k2 {
-    /* background: #2a3f54; */
-    background: #99b898;
-    color: #fff;
+    background: var(--second-bg);
+    color: var(--second-color);
 }
 
 .sidebar-navbar {
@@ -39,7 +57,7 @@ p {
 }
 
 .card-header a, h2 a i.fa {
-    color: rgb(33, 33, 33);
+    color: var(--header-color);
 }
 
 i.fa {
@@ -47,10 +65,10 @@ i.fa {
 }
 
 .dropdown-divider-dark {
-    height:0;
-    margin:.5rem 0;
-    overflow:hidden;
-    border-top:1px solid rgba(181, 189, 196, 0.5)
+    height: 0;
+    margin: .5rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--dropdown-divider);
 }
 
 .todaysdate {
@@ -59,7 +77,7 @@ i.fa {
 }
 
 .required {
-    color: #ff0000;
+    color: var(--required-color);
 }
 
 .employee-list {
@@ -67,17 +85,115 @@ i.fa {
 }
 
 ul.list-group.list-group-striped li:nth-of-type(even){
-    background: rgba(235, 235, 235, 0.1);
+    background: var(--list-bg);
 }
 
-@media (max-width:768px) {
+table a {
+    display: block;
+    color: var(--header-color);
+}
+
+th, td {
+    width: 14.285%;
+}
+
+th a {
+    color: var(--main-color);
+}
+
+th a:hover {
+    color: var(--main-bg);
+}
+
+.table .thead-dark th.workday {
+    background: var(--second-bg);
+}
+
+.table .thead-dark th.restday {
+    background: var(--restday-bg);
+}
+
+.table .thead-dark th.holiday {
+    background: var(--holiday-bg);
+}
+
+.table .thead-dark th.restday a,
+.table .thead-dark th.holiday a {
+    color: var(--header-color);
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: 1px solid var(--header-color);
+}
+
+.table thead th {
+    border-bottom: 2px solid var(--header-color);
+}
+
+.notes-row a {
+    display: inline-block;
+}
+
+.note-tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .note-tooltip .note-tooltip-text {
+    visibility: hidden;
+    background-color: var(--note-tooltip-bg);
+    color: var(--note-tooltip-color);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    
+    min-width: 150px;
+    max-width: 300px;
+    bottom: 150%;
+    left: 50%; 
+    margin-left: -80px; /* Use half of the width ( ( 150 + 2*5 ) / 2 = 80 ), to center the tooltip */
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .note-tooltip:hover .note-tooltip-text {
+    visibility: visible;
+  }
+  
+  .note-tooltip .note-tooltip-text::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--note-tooltip-bg) transparent transparent transparent;
+  }
+
+  
+
+@media (max-width: 768px) {
     .employee-list {
         font-size: 1em;
         padding-bottom: 5px;
     }
+    .table {
+        font-size: .75em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    h5 {
+        font-size: 1em;
+        font-weight: bold;
+    }
 }
 
-@media (max-width:992px) {
+@media (max-width: 992px) {
     .sidebar-navbar {
         position: relative;
         height: auto;

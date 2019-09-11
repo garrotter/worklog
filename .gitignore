@@ -9,3 +9,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+resources/views/app/alma/alma.blade.php
+app/Http/Controllers/AlmaController.php

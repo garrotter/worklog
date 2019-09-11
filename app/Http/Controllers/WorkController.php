@@ -12,13 +12,35 @@ use App\Employee;
 use App\Worker;
 use App\Truck;
 use App\Subcontractor;
-use App\Note;
 
 class WorkController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    private function searchWorks($startDate, $endDate, $company) 
+    {
+        if($company) {
+            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
+            ->where('customer_id', $company)->get()->sortBy('date')->sortBy('time');
+        } else {
+            $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('date')->sortBy('time');
+        }
+
+        return $works;
+    }
+
+    private function worksArray($day)
+    {
+        $company = '';
+        $works = $this->searchWorks($day, $day, $company);
+        $arrayWorks = array();
+        foreach ($works as $work) {
+            array_push($arrayWorks, $work);
+        }
+        return $arrayWorks;
     }
     
     /**
@@ -31,7 +53,7 @@ class WorkController extends Controller
         $day = $request->selected_date ?: Carbon::now()->format('Y-m-d');
         $works = Work::all()->where('date','=', $day)->sortBy('time');
         $message = $works->isEmpty() ? 'Sajnos nincs munka!' : '';
-        $notes = Note::all()->where('date', '=', $day);
+        $notes = app('App\Http\Controllers\NoteController')->getNotes($day, $day);
         
         return view('app.works.works', compact('works', 'day', 'notes', 'message'));
     }
@@ -233,14 +255,75 @@ class WorkController extends Controller
         } else {
             if ($request->customer) {
                 $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
-                    ->where('customer_id', $request->customer)->get()->sortBy('date');
+                    ->where('customer_id', $request->customer)->get()->sortBy('time')->sortBy('date');
                 $customerId = $request->customer;
             } else {
-                $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('date');
+                $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('time')->sortBy('date');
             }
 
         }
 
         return view('app.works.search', compact('companies', 'startDate', 'endDate', 'works'));
+    }
+
+    public function week(Request $request)
+    {
+        $mon = $request->start_date ? new Carbon($request->start_date) : Carbon::now()->startOfWeek();
+        $tue = (new Carbon($mon))->addDay(1);
+        $wed = (new Carbon($mon))->addDay(2);
+        $thu =  (new Carbon($mon))->addDay(3);
+        $fri =  (new Carbon($mon))->addDay(4);
+        $sat =  (new Carbon($mon))->addDay(5);
+        $sun =  (new Carbon($mon))->addDay(6);
+
+        $worksMonday= $this->worksArray($mon);
+        $worksTuesday= $this->worksArray($tue);
+        $worksWednesday= $this->worksArray($wed);
+        $worksThursday= $this->worksArray($thu);
+        $worksFriday= $this->worksArray($fri);
+        $worksSaturday= $this->worksArray($sat);
+        $worksSunday= $this->worksArray($sun);
+
+        $monday = app('App\Http\Controllers\DayController')->setDay($mon);
+        $tuesday = app('App\Http\Controllers\DayController')->setDay($tue);
+        $wednesday = app('App\Http\Controllers\DayController')->setDay($wed);
+        $thursday = app('App\Http\Controllers\DayController')->setDay($thu);
+        $friday = app('App\Http\Controllers\DayController')->setDay($fri);
+        $saturday = app('App\Http\Controllers\DayController')->setDay($sat);
+        $sunday = app('App\Http\Controllers\DayController')->setDay($sun);
+
+        $notesMonday = app('App\Http\Controllers\NoteController')->getNotes($mon, $mon);
+        $notesTuesday = app('App\Http\Controllers\NoteController')->getNotes($tue, $tue);
+        $notesWednesday = app('App\Http\Controllers\NoteController')->getNotes($wed, $wed);
+        $notesThursday = app('App\Http\Controllers\NoteController')->getNotes($thu, $thu);
+        $notesFriday = app('App\Http\Controllers\NoteController')->getNotes($fri, $fri);
+        $notesSaturday = app('App\Http\Controllers\NoteController')->getNotes($sat, $sat);
+        $notesSunday = app('App\Http\Controllers\NoteController')->getNotes($sun, $sun);
+
+        $maxWork = 0;
+
+        if ($maxWork < count($worksMonday)) {
+            $maxWork = count($worksMonday);
+        }
+        if ($maxWork < count($worksTuesday)) {
+            $maxWork = count($worksTuesday);
+        }
+        if ($maxWork < count($worksWednesday)) {
+            $maxWork = count($worksWednesday);
+        }
+        if ($maxWork < count($worksThursday)) {
+            $maxWork = count($worksThursday);
+        }
+        if ($maxWork < count($worksFriday)) {
+            $maxWork = count($worksFriday);
+        }
+        if ($maxWork < count($worksSaturday)) {
+            $maxWork = count($worksSaturday);
+        }
+        if ($maxWork < count($worksSunday)) {
+            $maxWork = count($worksSunday);
+        }
+
+        return view('app.works.weekly', compact('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'worksMonday', 'worksTuesday', 'worksWednesday', 'worksThursday', 'worksFriday', 'worksSaturday', 'worksSunday', 'maxWork', 'notesMonday', 'notesTuesday', 'notesWednesday', 'notesThursday', 'notesFriday', 'notesSaturday', 'notesSunday'));
     }
 }

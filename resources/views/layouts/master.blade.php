@@ -9,12 +9,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('lib/lib/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/flatpicker/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/summernote/summernote-bs4.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <link rel="shortcut icon" href="{{{ asset('img/favicon.png') }}}">
