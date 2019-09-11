@@ -12,7 +12,6 @@ use App\Employee;
 use App\Worker;
 use App\Truck;
 use App\Subcontractor;
-use App\Note;
 
 class WorkController extends Controller
 {
@@ -54,7 +53,7 @@ class WorkController extends Controller
         $day = $request->selected_date ?: Carbon::now()->format('Y-m-d');
         $works = Work::all()->where('date','=', $day)->sortBy('time');
         $message = $works->isEmpty() ? 'Sajnos nincs munka!' : '';
-        $notes = Note::all()->where('date', '=', $day);
+        $notes = app('App\Http\Controllers\NoteController')->getNotes($day, $day);
         
         return view('app.works.works', compact('works', 'day', 'notes', 'message'));
     }
@@ -293,6 +292,14 @@ class WorkController extends Controller
         $saturday = app('App\Http\Controllers\DayController')->setDay($sat);
         $sunday = app('App\Http\Controllers\DayController')->setDay($sun);
 
+        $notesMonday = app('App\Http\Controllers\NoteController')->getNotes($mon, $mon);
+        $notesTuesday = app('App\Http\Controllers\NoteController')->getNotes($tue, $tue);
+        $notesWednesday = app('App\Http\Controllers\NoteController')->getNotes($wed, $wed);
+        $notesThursday = app('App\Http\Controllers\NoteController')->getNotes($thu, $thu);
+        $notesFriday = app('App\Http\Controllers\NoteController')->getNotes($fri, $fri);
+        $notesSaturday = app('App\Http\Controllers\NoteController')->getNotes($sat, $sat);
+        $notesSunday = app('App\Http\Controllers\NoteController')->getNotes($sun, $sun);
+
         $maxWork = 0;
 
         if ($maxWork < count($worksMonday)) {
@@ -317,6 +324,6 @@ class WorkController extends Controller
             $maxWork = count($worksSunday);
         }
 
-        return view('app.works.weekly', compact('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'worksMonday', 'worksTuesday', 'worksWednesday', 'worksThursday', 'worksFriday', 'worksSaturday', 'worksSunday', 'maxWork'));
+        return view('app.works.weekly', compact('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'worksMonday', 'worksTuesday', 'worksWednesday', 'worksThursday', 'worksFriday', 'worksSaturday', 'worksSunday', 'maxWork', 'notesMonday', 'notesTuesday', 'notesWednesday', 'notesThursday', 'notesFriday', 'notesSaturday', 'notesSunday'));
     }
 }

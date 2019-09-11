@@ -87,3 +87,5 @@ Route::post('/note', 'NoteController@store');
 Route::get('/note/{note}/edit', 'NoteController@edit');
 Route::post('/note/{note}', 'NoteController@update');
 Route::delete('/note/{note}', 'NoteController@destroy');
+
+Route::get('/alma', 'AlmaController@alma');
