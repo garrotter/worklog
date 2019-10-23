@@ -30,6 +30,10 @@ body {
     color: var(--second-color);
 }
 
+.min-vh-100 {
+    min-height: 100vh;
+}
+
 .sidebar-navbar {
     position: fixed;
     top: 0;
@@ -109,11 +113,11 @@ th a:hover {
     background: var(--second-bg);
 }
 
-.table .thead-dark th.restday {
+.restday {
     background: var(--restday-bg);
 }
 
-.table .thead-dark th.holiday {
+.holiday {
     background: var(--holiday-bg);
 }
 
