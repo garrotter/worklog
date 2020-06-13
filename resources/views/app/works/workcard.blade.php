@@ -104,7 +104,7 @@
                 @endif
                 @if ($work->trucks->isEmpty())
                 @else
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-sm-3 col-md-5">
                             <p>
                                 <small>Rendszám:</small>
