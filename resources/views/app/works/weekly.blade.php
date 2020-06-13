@@ -87,196 +87,49 @@
                     <tbody>
                         <tr class="notes-row">
                             <td class="text-right">
-                                @foreach ($notesMonday as $note)
-                                    <a href="/works?selected_date={{ $monday->date->format('Y-m-d') }}" class="note-tooltip">
-                                        <i class="fa fa-circle text-info" aria-hidden="true"></i>
-                                        <span class="note-tooltip-text">{!! $note->note !!}</span>
-                                    </a>
-                                @endforeach
+                                @include('app.works.weeklynotecard', ['notes'=>$notesMonday, 'day'=>$monday])
                             </td>
                             <td class="text-right">
-                                @foreach ($notesTuesday as $note)
-                                    <a href="/works?selected_date={{ $tuesday->date->format('Y-m-d') }}" class="note-tooltip">
-                                        <i class="fa fa-circle text-info" aria-hidden="true"></i>
-                                        <span class="note-tooltip-text">{!! $note->note !!}</span>
-                                    </a>
-                                @endforeach
+                                @include('app.works.weeklynotecard', ['notes'=>$notesTuesday, 'day'=>$tuesday])
                             </td>
                             <td class="text-right">
-                                @foreach ($notesWednesday as $note)
-                                    <a href="/works?selected_date={{ $wednesday->date->format('Y-m-d') }}" class="note-tooltip">
-                                        <i class="fa fa-circle text-info" aria-hidden="true"></i>
-                                        <span class="note-tooltip-text">{!! $note->note !!}</span>
-                                    </a>
-                                @endforeach
+                                @include('app.works.weeklynotecard', ['notes'=>$notesWednesday, 'day'=>$wednesday])
                             </td>
                             <td class="text-right">
-                                @foreach ($notesThursday as $note)
-                                    <a href="/works?selected_date={{ $thursday->date->format('Y-m-d') }}" class="note-tooltip">
-                                        <i class="fa fa-circle text-info" aria-hidden="true"></i>
-                                        <span class="note-tooltip-text">{!! $note->note !!}</span>
-                                    </a>
-                                @endforeach
+                                @include('app.works.weeklynotecard', ['notes'=>$notesThursday, 'day'=>$thursday])
                             </td>
                             <td class="text-right">
-                                @foreach ($notesFriday as $note)
-                                    <a href="/works?selected_date={{ $friday->date->format('Y-m-d') }}" class="note-tooltip">
-                                        <i class="fa fa-circle text-info" aria-hidden="true"></i>
-                                        <span class="note-tooltip-text">{!! $note->note !!}</span>
-                                    </a>
-                                @endforeach
+                                @include('app.works.weeklynotecard', ['notes'=>$notesFriday, 'day'=>$friday])
                             </td>
                             <td class="text-right">
-                                @foreach ($notesSaturday as $note)
-                                    <a href="/works?selected_date={{ $saturday->date->format('Y-m-d') }}" class="note-tooltip">
-                                        <i class="fa fa-circle text-info" aria-hidden="true"></i>
-                                        <span class="note-tooltip-text">{!! $note->note !!}</span>
-                                    </a>
-                                @endforeach
+                                @include('app.works.weeklynotecard', ['notes'=>$notesSaturday, 'day'=>$saturday])
                             </td>
                             <td class="text-right">
-                                @foreach ($notesSunday as $note)
-                                    <a href="/works?selected_date={{ $sunday->date->format('Y-m-d') }}" class="note-tooltip">
-                                        <i class="fa fa-circle text-info" aria-hidden="true"></i>
-                                        <span class="note-tooltip-text">{!! $note->note !!}</span>
-                                    </a>
-                                @endforeach
+                                @include('app.works.weeklynotecard', ['notes'=>$notesSunday, 'day'=>$sunday])
                             </td>
                         </tr>
                         @for ($i = 0; $i < $maxWork; $i++)
                             <tr>
                                 <td>
-                                    @if (isset($worksMonday[$i]))
-                                        <div>
-                                            <h5>
-                                                <a href="/work/{{ $worksMonday[$i]->id }}">
-                                                    {{ $worksMonday[$i]->customer->name }}
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div class="text-secondary">
-                                            @if ( !($worksMonday[$i]->time == NULL) )
-                                                <small>Kiállás: {{ Carbon\Carbon::parse($worksMonday[$i]->time)->format('H:i') }}</small>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            {{ $worksMonday[$i]->lead }}
-                                        </div>
-                                    @endif
+                                    @include('app.works.weeklycard', ['works'=>$worksMonday, 'i'=>$i])
                                 </td>
                                 <td>
-                                    @if (isset($worksTuesday[$i]))
-                                        <div>
-                                            <h5>
-                                                <a href="/work/{{ $worksTuesday[$i]->id }}">
-                                                    {{ $worksTuesday[$i]->customer->name }}
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div class="text-secondary">
-                                            @if ( !($worksTuesday[$i]->time == NULL) )
-                                                <small>Kiállás: {{ Carbon\Carbon::parse($worksTuesday[$i]->time)->format('H:i') }}</small>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            {{ $worksTuesday[$i]->lead }}
-                                        </div>
-                                    @endif
+                                    @include('app.works.weeklycard', ['works'=>$worksTuesday, 'i'=>$i])
                                 </td>
                                 <td>
-                                    @if (isset($worksWednesday[$i]))
-                                        <div>
-                                            <h5>
-                                                <a href="/work/{{ $worksWednesday[$i]->id }}">
-                                                    {{ $worksWednesday[$i]->customer->name }}
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div class="text-secondary">
-                                            @if ( !($worksWednesday[$i]->time == NULL) )
-                                                <small>Kiállás: {{ Carbon\Carbon::parse($worksWednesday[$i]->time)->format('H:i') }}</small>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            {{ $worksWednesday[$i]->lead }}
-                                        </div>
-                                    @endif
+                                    @include('app.works.weeklycard', ['works'=>$worksWednesday, 'i'=>$i])
                                 </td>
                                 <td>
-                                    @if (isset($worksThursday[$i]))
-                                        <div>
-                                            <h5>
-                                                <a href="/work/{{ $worksThursday[$i]->id }}">
-                                                    {{ $worksThursday[$i]->customer->name }}
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div class="text-secondary">
-                                            @if ( !($worksThursday[$i]->time == NULL) )
-                                                <small>Kiállás: {{ Carbon\Carbon::parse($worksThursday[$i]->time)->format('H:i') }}</small>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            {{ $worksThursday[$i]->lead }}
-                                        </div>
-                                    @endif
+                                    @include('app.works.weeklycard', ['works'=>$worksThursday, 'i'=>$i])
                                 </td>
                                 <td>
-                                    @if (isset($worksFriday[$i]))
-                                        <div>
-                                            <h5>
-                                                <a href="/work/{{ $worksFriday[$i]->id }}">
-                                                    {{ $worksFriday[$i]->customer->name }}
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div class="text-secondary">
-                                            @if ( !($worksFriday[$i]->time == NULL) )
-                                                <small>Kiállás: {{ Carbon\Carbon::parse($worksFriday[$i]->time)->format('H:i') }}</small>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            {{ $worksFriday[$i]->lead }}
-                                        </div>
-                                    @endif
+                                    @include('app.works.weeklycard', ['works'=>$worksFriday, 'i'=>$i])
                                 </td>
                                 <td>
-                                    @if (isset($worksSaturday[$i]))
-                                        <div>
-                                            <h5>
-                                                <a href="/work/{{ $worksSaturday[$i]->id }}">
-                                                    {{ $worksSaturday[$i]->customer->name }}
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div class="text-secondary">
-                                            @if ( !($worksSaturday[$i]->time == NULL) )
-                                                <small>Kiállás: {{ Carbon\Carbon::parse($worksSaturday[$i]->time)->format('H:i') }}</small>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            {{ $worksSaturday[$i]->lead }}
-                                        </div>
-                                    @endif
+                                    @include('app.works.weeklycard', ['works'=>$worksSaturday, 'i'=>$i])
                                 </td>
                                 <td>
-                                    @if (isset($worksSunday[$i]))
-                                        <div>
-                                            <h5>
-                                                <a href="/work/{{ $worksSunday[$i]->id }}">
-                                                    {{ $worksSunday[$i]->customer->name }}
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div class="text-secondary">
-                                            @if ( !($worksSunday[$i]->time == NULL) )
-                                                <small>Kiállás: {{ Carbon\Carbon::parse($worksSunday[$i]->time)->format('H:i') }}</small>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            {{ $worksSunday[$i]->lead }}
-                                        </div>
-                                    @endif
+                                    @include('app.works.weeklycard', ['works'=>$worksSunday, 'i'=>$i])
                                 </td>
                             </tr>
                         @endfor

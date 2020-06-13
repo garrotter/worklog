@@ -51,11 +51,12 @@ class WorkController extends Controller
     public function index(Request $request)
     {
         $day = $request->selected_date ?: Carbon::now()->format('Y-m-d');
+        $dayObj = app('App\Http\Controllers\DayController')->setDay($day);
         $works = Work::all()->where('date','=', $day)->sortBy('time');
         $message = $works->isEmpty() ? 'Sajnos nincs munka!' : '';
         $notes = app('App\Http\Controllers\NoteController')->getNotes($day, $day);
         
-        return view('app.works.works', compact('works', 'day', 'notes', 'message'));
+        return view('app.works.works', compact('works', 'day', 'dayObj', 'notes', 'message'));
     }
 
     /**
