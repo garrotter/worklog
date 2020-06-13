@@ -9,12 +9,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('lib/lib/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/flatpicker/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('lib/summernote/summernote-bs4.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <link rel="shortcut icon" href="{{{ asset('img/favicon.png') }}}">
@@ -24,7 +23,19 @@
         <div class="row">
             @include('layouts/nav')
 
-            <div class="col-lg-10 ml-auto">
+            <div class="col-lg-10 ml-auto min-vh-100
+                @isset($dayObj)
+                    {{ !$dayObj->sd ? 'workday' : ($dayObj->sd==='r' ? 'restday' : ($dayObj->sd ==='h' ? 'holiday' : '')) }}
+
+                    {{ date('N', strtotime($dayObj->date))==='7' || $dayObj->sd ==='h' ? 'holiday' : '' }}
+                    
+                    @if (date('N', strtotime($dayObj->date))==='7' || $dayObj->sd ==='h')
+                        holiday
+                    @elseif ((date('N', strtotime($dayObj->date))==='6' && !$dayObj->sd) || $dayObj->sd==="r")
+                        restday
+                    @endif
+                @endisset
+            ">
                 <div class="row">
                     <header class="col-12 mb-3 bg-k2">
                         <div class="todaysdate">

@@ -24,7 +24,13 @@
                             <i class="fa fa-ban" aria-hidden="true"></i> Nincs számlázva
                         </a>
                         <a class="nav-link" href="/works/drafts">
-                            <i class="fa fa-question" aria-hidden="true"></i> Függőben
+                            <i class="fa fa-calendar-times-o" aria-hidden="true"></i> Függőben
+                        </a>
+                        <a class="nav-link" href="/works/search">
+                            <i class="fa fa-question" aria-hidden="true"></i> Keresés
+                        </a>
+                        <a class="nav-link" href="/works/week">
+                            <i class="fa fa-calendar-minus-o" aria-hidden="true"></i> Heti nézet
                         </a>
                     </div>
                     <div class="dropdown-divider"></div>

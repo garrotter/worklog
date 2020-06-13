@@ -16,12 +16,10 @@
                         <label for="customer" class="required">Megrendelő cég: *</label>
                         <select class="form-control" id="customer" name="customer" required>
                             @foreach ($companies as $company)
-                                @if (!$company->archived_at)
-                                    @if (!($company->id ==  $work->customer->id))
-                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                    @else
-                                        <option selected value="{{ $company->id }}">{{ $company->name }}</option>
-                                    @endif
+                                @if (!($company->id ==  $work->customer->id))
+                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                @else
+                                    <option selected value="{{ $company->id }}">{{ $company->name }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -31,21 +29,17 @@
                         <select class="form-control select2-multi" id="contacts" name="contacts[]" multiple>
                             @if ($work->contacts->isEmpty())
                                 @foreach ($employees as $employee)
-                                    @if (!$employee->archived_at)
-                                        <option value="{{ $employee->id }}">{{ $employee->name }} - {{ $employee->company->name }}</option>
-                                    @endif
+                                    <option value="{{ $employee->id }}">{{ $employee->name }} - {{ $employee->company->name }}</option>
                                 @endforeach
                             @else
                                 @foreach ($employees as $employee)
-                                    @if (!$employee->archived_at)
-                                        @foreach($work->contacts as $contact)
-                                            @if($employee->id == $contact->id)
-                                                <option value="{{ $employee->id }}" selected>{{ $employee->name }} - {{ $employee->company->name }}</option>
-                                                <?php continue 2; ?>
-                                            @endif
-                                        @endforeach
-                                        <option value="{{ $employee->id }}">{{ $employee->name }} - {{ $employee->company->name }}</option>
-                                    @endif
+                                    @foreach($work->contacts as $contact)
+                                        @if($employee->id == $contact->id)
+                                            <option value="{{ $employee->id }}" selected>{{ $employee->name }} - {{ $employee->company->name }}</option>
+                                            <?php continue 2; ?>
+                                        @endif
+                                    @endforeach
+                                    <option value="{{ $employee->id }}">{{ $employee->name }} - {{ $employee->company->name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -121,21 +115,17 @@
                         <select class="form-control select2-multi" id="trucks" name="trucks[]" multiple>
                             @if ($work->trucks->isEmpty())
                                 @foreach ($trucks as $truck)
-                                    @if (!$truck->archived_at)
-                                        <option value="{{ $truck->id }}">{{ $truck->plate }}</option>
-                                    @endif
+                                    <option value="{{ $truck->id }}">{{ $truck->plate }}</option>
                                 @endforeach
                             @else
                                 @foreach ($trucks as $truck)
-                                    @if (!$truck->archived_at)
-                                        @foreach($work->trucks as $selected_truck)
-                                            @if($truck->id == $selected_truck->id)
-                                                <option value="{{ $truck->id }}" selected>{{ $truck->plate }}</option>
-                                                <?php continue 2; ?>
-                                            @endif
-                                        @endforeach
-                                        <option value="{{ $truck->id }}">{{ $truck->plate }}</option>
-                                    @endif
+                                    @foreach($work->trucks as $selected_truck)
+                                        @if($truck->id == $selected_truck->id)
+                                            <option value="{{ $truck->id }}" selected>{{ $truck->plate }}</option>
+                                            <?php continue 2; ?>
+                                        @endif
+                                    @endforeach
+                                    <option value="{{ $truck->id }}">{{ $truck->plate }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -148,21 +138,17 @@
                         <select class="form-control select2-multi" id="workers" name="workers[]" multiple>
                             @if ($work->workers->isEmpty())
                                 @foreach ($workers as $worker)
-                                    @if (!$worker->archived_at)
-                                        <option value="{{ $worker->id }}">{{ $worker->name }}</option>
-                                    @endif
+                                    <option value="{{ $worker->id }}">{{ $worker->name }}</option>
                                 @endforeach
                             @else
                                 @foreach ($workers as $worker)
-                                    @if (!$worker->archived_at)
-                                        @foreach($work->workers as $selected_worker)
-                                            @if($worker->id == $selected_worker->id)
-                                                <option value="{{ $worker->id }}" selected>{{ $worker->name }}</option>
-                                                <?php continue 2; ?>
-                                            @endif
-                                        @endforeach
-                                        <option value="{{ $worker->id }}">{{ $worker->name }}</option>
-                                    @endif
+                                    @foreach($work->workers as $selected_worker)
+                                        @if($worker->id == $selected_worker->id)
+                                            <option value="{{ $worker->id }}" selected>{{ $worker->name }}</option>
+                                            <?php continue 2; ?>
+                                        @endif
+                                    @endforeach
+                                    <option value="{{ $worker->id }}">{{ $worker->name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -175,21 +161,17 @@
                         <select class="form-control select2-multi" id="subcontractors" name="subcontractors[]" multiple>
                             @if ($work->subcontractors->isEmpty())
                                     @foreach ($subcontractors as $subcontractor)
-                                        @if (!$subcontractor->archived_at)
-                                            <option value="{{ $subcontractor->id }}">{{ $subcontractor->name }}</option>
-                                        @endif
+                                        <option value="{{ $subcontractor->id }}">{{ $subcontractor->name }}</option>
                                     @endforeach
                             @else
                                 @foreach ($subcontractors as $subcontractor)
-                                    @if (!$subcontractor->archived_at)
-                                        @foreach($work->subcontractors as $selected_subcontractor)
-                                            @if($subcontractor->id == $selected_subcontractor->id)
-                                                <option value="{{ $subcontractor->id }}" selected>{{ $subcontractor->name }}</option>
-                                                <?php continue 2; ?>
-                                            @endif
-                                        @endforeach
-                                        <option value="{{ $subcontractor->id }}">{{ $subcontractor->name }}</option>
-                                    @endif
+                                    @foreach($work->subcontractors as $selected_subcontractor)
+                                        @if($subcontractor->id == $selected_subcontractor->id)
+                                            <option value="{{ $subcontractor->id }}" selected>{{ $subcontractor->name }}</option>
+                                            <?php continue 2; ?>
+                                        @endif
+                                    @endforeach
+                                    <option value="{{ $subcontractor->id }}">{{ $subcontractor->name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -226,13 +208,40 @@
                             </form>
                         </div>
                     @endif
+
                     <div class="form-group col-md-4">
+                        <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteWorkModal">
+                            Törlés
+                        </button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteWorkModal" tabindex="-1" role="dialog" aria-labelledby="deleteWorkModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                                <h5 class="modal-title " id="deleteWorkModalLabel">Biztosan törölni szeretnéd ezt a munkát?</h5>
+                                <i>(Ez nem viszavonható, végleg elveszik!)</i>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Mégsem</button>
+                            <form action="/work/{{ $work->id }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-block">Törlés</button>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="form-group col-md-4">
                         <form action="/work/{{ $work->id }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-block">Törlés</button>
                         </form>
-                    </div>
+                    </div> --}}
                 </div>
                 {{--  /.row /buttons  --}}
         </div>

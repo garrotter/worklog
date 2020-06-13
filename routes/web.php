@@ -37,6 +37,8 @@ Route::delete('/work/{work}', 'WorkController@destroy');
 Route::get('/works/notbilled', 'WorkController@showNotBilled');
 Route::post('/work/{work}/billing', 'WorkController@billing');
 Route::get('/works/drafts', 'WorkController@showDrafts');
+Route::get('/works/search', 'WorkController@search');
+Route::get('/works/week', 'WorkController@week');
 
 Route::get('/workers', 'WorkerController@index');
 Route::get('/worker/new', 'WorkerController@create');
@@ -85,3 +87,5 @@ Route::post('/note', 'NoteController@store');
 Route::get('/note/{note}/edit', 'NoteController@edit');
 Route::post('/note/{note}', 'NoteController@update');
 Route::delete('/note/{note}', 'NoteController@destroy');
+
+Route::get('/alma', 'AlmaController@alma');

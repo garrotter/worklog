@@ -17,9 +17,7 @@
                         <select class="form-control" id="customer" name="customer" required>
                             <option value="" selected disabled>Válassz céget</option>
                             @foreach ($companies as $company)
-                                @if (!$company->archived_at)
-                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                @endif
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -27,9 +25,7 @@
                         <label for="contacts">Kapcsolat:</label>
                         <select class="form-control select2-multi" id="contacts" name="contacts[]" multiple>
                             @foreach ($employees as $employee)
-                                @if (!$employee->archived_at)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }} - {{ $employee->company->name }}</option>
-                                @endif
+                                <option value="{{ $employee->id }}">{{ $employee->name }} - {{ $employee->company->name }}</option>
                             @endforeach
                         </select>
                         <small class="form-text text-muted">
@@ -93,20 +89,8 @@
                         <input type="text" class="form-control" id="comment" name="comment" placeholder="Ár, stb.">
                     </div>
                 </div>
-                {{--  /.row /comment  --}}
-        {{--         <div class="form-group">
-                    <label for="payer">Fizet:</label>
-                    <select class="form-control" id="payer" name="payer">
-                        <option value="" selected disabled>Válassz céget</option>
-                        @foreach ($companies as $company)
-                            @if (!$company->archived_at)
-                                <option value="{{ $company->id }}">{{ $company->name }}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div> --}}
                 <div class="row">
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-6 mx-auto">
                         <button type="submit" class="btn btn-primary btn-block">Mentés</button>
                     </div>
                 </div>

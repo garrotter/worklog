@@ -13,6 +13,13 @@ class NoteController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function getNotes($startDay, $endDay)
+    {
+        $notes = Note::whereBetween(DB::raw('DATE(date)'), array($startDay, $endDay))->get()->sortBy('date');
+
+        return $notes;
+    }
     
     /**
      * Display a listing of the resource.

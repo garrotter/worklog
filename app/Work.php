@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Work extends Model
 {
+    protected $fillable = [
+        'customer_id', 'date', 'time', 'need', 'address', 'order_number', 'lead', 'decription', 'comment', 'started_time', 'ended_time'
+    ];
+
+    protected $hidden = [];
+
     public $table = "works";
     public $timestamps = null;
     
