@@ -25,7 +25,9 @@ Route::get('/home', function () {
     return redirect('works');
 });
 
-Auth::routes();
+Auth::routes([
+    'register' => false
+]);
 
 Route::get('/works', 'WorkController@index');
 Route::get('/work/new', 'WorkController@create');
