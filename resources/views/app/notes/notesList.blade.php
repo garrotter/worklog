@@ -30,17 +30,17 @@
                     <a class="btn btn-warning btn-sm btn-block" role="button" href="/allnotes">
                         Összes jegyzet
                     </a>
-                    
+
                 </div>
                 <div class="col-md-6 mt-2 mt-md-0">
-                    <a class="btn btn-success btn-sm btn-block" role="button" href="/note/new">
+                    <a class="btn btn-success btn-sm btn-block" role="button" href="{{ route('notes.create') }}">
                         Új jegyzet
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row"> 
+    <div class="row">
         <div class="col-12 mx-auto">
             <ul class="list-group list-group-striped">
                 @foreach ($notes as $note)
@@ -48,10 +48,13 @@
                         <div class="row">
                             <div class="col-md-3">{{ $note->date }}</div>
                             <div class="col-md-7">{!! $note->note !!}</div>
-                            <div class="col-md-2  mt-2 mt-md-0">
-                                <a class="btn btn-primary btn-sm btn-block" role="button" href="/note/{{ $note->id }}/edit">
+                            <div class="col-md-2  mt-2 mt-md-0 btn-group" role="group">
+                                <a class="btn btn-primary btn-sm. col-md-6" role="button" href="{{ route('notes.edit', $note) }}">
                                     Szerkesztés
                                 </a>
+                                <button class="btn btn-danger btn-sm col-md-6" data-toggle="modal" data-target="#deleteModal">
+                                    Törlés
+                                </button>
                             </div>
                         </div>
                     </li>
@@ -59,4 +62,6 @@
             </ul>
         </div>
     </div>
+
+    <x-deleteModal :modelName="'a jegyzetet'" :actionPath="route('notes.destroy', $note)"/>
 @endsection

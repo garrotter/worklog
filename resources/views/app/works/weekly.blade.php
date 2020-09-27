@@ -87,25 +87,25 @@
                     <tbody>
                         <tr class="notes-row">
                             <td class="text-right">
-                                @include('app.works.weeklynotecard', ['notes'=>$notesMonday, 'day'=>$monday])
+                                @include('app.notes.weeklyNoteCard', ['notes'=>$notesMonday, 'day'=>$monday])
                             </td>
                             <td class="text-right">
-                                @include('app.works.weeklynotecard', ['notes'=>$notesTuesday, 'day'=>$tuesday])
+                                @include('app.notes.weeklyNoteCard', ['notes'=>$notesTuesday, 'day'=>$tuesday])
                             </td>
                             <td class="text-right">
-                                @include('app.works.weeklynotecard', ['notes'=>$notesWednesday, 'day'=>$wednesday])
+                                @include('app.notes.weeklyNoteCard', ['notes'=>$notesWednesday, 'day'=>$wednesday])
                             </td>
                             <td class="text-right">
-                                @include('app.works.weeklynotecard', ['notes'=>$notesThursday, 'day'=>$thursday])
+                                @include('app.notes.weeklyNoteCard', ['notes'=>$notesThursday, 'day'=>$thursday])
                             </td>
                             <td class="text-right">
-                                @include('app.works.weeklynotecard', ['notes'=>$notesFriday, 'day'=>$friday])
+                                @include('app.notes.weeklyNoteCard', ['notes'=>$notesFriday, 'day'=>$friday])
                             </td>
                             <td class="text-right">
-                                @include('app.works.weeklynotecard', ['notes'=>$notesSaturday, 'day'=>$saturday])
+                                @include('app.notes.weeklyNoteCard', ['notes'=>$notesSaturday, 'day'=>$saturday])
                             </td>
                             <td class="text-right">
-                                @include('app.works.weeklynotecard', ['notes'=>$notesSunday, 'day'=>$sunday])
+                                @include('app.notes.weeklyNoteCard', ['notes'=>$notesSunday, 'day'=>$sunday])
                             </td>
                         </tr>
                         @for ($i = 0; $i < $maxWork; $i++)

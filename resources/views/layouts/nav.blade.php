@@ -35,10 +35,10 @@
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="nav-item">
-                        <a class="nav-link" href="/notes">
+                        <a class="nav-link" href="{{ route('notes.index') }}">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Jegyzetek
                         </a>
-                        <a class="nav-link" href="/note/new">
+                        <a class="nav-link" href="{{ route('notes.create') }}">
                             <i class="fa fa-plus" aria-hidden="true"></i> Új jegyzet
                         </a>
                     </div>

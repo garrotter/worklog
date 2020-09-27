@@ -11,12 +11,6 @@
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 Route::get('/', function () {
     return redirect('works');
 });
@@ -82,12 +76,5 @@ Route::get('/employee/{employee}/edit', 'EmployeeController@edit');
 Route::post('/employee/{employee}', 'EmployeeController@update');
 Route::delete('/employee/{employee}', 'EmployeeController@destroy');
 
-Route::get('/notes', 'NoteController@index');
+Route::resource('notes', 'NoteController');
 Route::get('/allnotes', 'NoteController@index');
-Route::get('/note/new', 'NoteController@create');
-Route::post('/note', 'NoteController@store');
-Route::get('/note/{note}/edit', 'NoteController@edit');
-Route::post('/note/{note}', 'NoteController@update');
-Route::delete('/note/{note}', 'NoteController@destroy');
-
-Route::get('/alma', 'AlmaController@alma');

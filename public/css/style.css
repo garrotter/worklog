@@ -34,6 +34,10 @@ body {
     min-height: 100vh;
 }
 
+.btn {
+    cursor: pointer;
+}
+
 .sidebar-navbar {
     position: fixed;
     top: 0;
@@ -142,32 +146,32 @@ th a:hover {
 .note-tooltip {
     position: relative;
     display: inline-block;
-  }
-  
-  .note-tooltip .note-tooltip-text {
+}
+
+.note-tooltip .note-tooltip-text {
     visibility: hidden;
     background-color: var(--note-tooltip-bg);
     color: var(--note-tooltip-color);
     text-align: center;
     border-radius: 6px;
     padding: 5px;
-    
+
     min-width: 150px;
     max-width: 300px;
     bottom: 150%;
-    left: 50%; 
+    left: 50%;
     margin-left: -80px; /* Use half of the width ( ( 150 + 2*5 ) / 2 = 80 ), to center the tooltip */
-  
+
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
-  }
-  
-  .note-tooltip:hover .note-tooltip-text {
+}
+
+.note-tooltip:hover .note-tooltip-text {
     visibility: visible;
-  }
-  
-  .note-tooltip .note-tooltip-text::after {
+}
+
+.note-tooltip .note-tooltip-text::after {
     content: " ";
     position: absolute;
     top: 100%; /* At the bottom of the tooltip */
@@ -176,9 +180,11 @@ th a:hover {
     border-width: 5px;
     border-style: solid;
     border-color: var(--note-tooltip-bg) transparent transparent transparent;
-  }
+}
 
-  
+.note-card:not(:last-child) {
+    margin-bottom: .5em;
+}
 
 @media (max-width: 768px) {
     .employee-list {

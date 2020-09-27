@@ -20,7 +20,7 @@ class NoteController extends Controller
 
         return $notes;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -34,16 +34,17 @@ class NoteController extends Controller
         $endDate = $request->endDate;
 
         if ($uri == 'notes' && (!$startDate && !$endDate)) {
-            $notes = Note::all()->where('date', '>=', Carbon::today()->toDateString())->sortBy('date');
+            $notes = $this->getNotes($today, '2999-12-31');
         } elseif ($uri == 'notes' && ($startDate || $endDate)){
             if (!$startDate) { $startDate = '1900-01-01';}
             if (!$endDate) { $endDate = $today;}
-            $notes = Note::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))->get()->sortBy('date');
+            
+            $notes = $this->getNotes($startDate, $endDate);
         } else {
             $notes = Note::all()->sortBy('date');
         }
-        
-        return view('app.notes.notes', compact('notes', 'uri', 'today', 'startDate', 'endDate'));
+
+        return view('app.notes.notesList', compact('notes', 'startDate', 'endDate'));
     }
 
     /**
@@ -53,7 +54,8 @@ class NoteController extends Controller
      */
     public function create()
     {
-        return view('app.notes.newnote');
+        // return view('app.notes.newnote');
+        return $this->edit(new Note());
     }
 
     /**
@@ -64,17 +66,7 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
-            'date' => 'required',
-            'note' => 'required'
-        ]);
-
-        Note::create([
-            'date' => request('date'),
-            'note' => request('note')
-        ]);
-
-        return redirect('notes');
+        return $this->update($request, new Note());
     }
 
     /**
@@ -96,7 +88,7 @@ class NoteController extends Controller
      */
     public function edit(Note $note)
     {
-        return view('app.notes.editnote', compact('note'));
+        return view('app.notes.formForNote', compact('note'));
     }
 
     /**
@@ -112,12 +104,9 @@ class NoteController extends Controller
             'date' => 'required',
             'note' => 'required'
         ]);
-
-        Note::where('id', $note->id)
-            ->update([
-                'date' => request('date'),
-                'note' => request('note')
-        ]);
+        $note->date = request('date');
+        $note->note = request('note');
+        $note->save();
 
         return redirect('notes');
     }
