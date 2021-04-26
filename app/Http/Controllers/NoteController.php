@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Note;
+use App\Models\Note;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +38,7 @@ class NoteController extends Controller
         } elseif ($uri == 'notes' && ($startDate || $endDate)){
             if (!$startDate) { $startDate = '1900-01-01';}
             if (!$endDate) { $endDate = $today;}
-            
+
             $notes = $this->getNotes($startDate, $endDate);
         } else {
             $notes = Note::all()->sortBy('date');
@@ -72,7 +72,7 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Note  $note
+     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function show(Note $note)
@@ -83,7 +83,7 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Note  $note
+     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function edit(Note $note)
@@ -95,7 +95,7 @@ class NoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Note  $note
+     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Note $note)
@@ -114,7 +114,7 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Note  $note
+     * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
     public function destroy(Note $note)

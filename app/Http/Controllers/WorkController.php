@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-use App\Work;
-use App\Company;
-use App\Employee;
-use App\Worker;
-use App\Truck;
-use App\Subcontractor;
+use App\Models\Work;
+use \Models\Company;
+use \Models\Employee;
+use App\Models\Worker;
+use App\Models\Truck;
+use App\Models\Subcontractor;
 
 class WorkController extends Controller
 {
@@ -20,7 +20,7 @@ class WorkController extends Controller
         $this->middleware('auth');
     }
 
-    private function searchWorks($startDate, $endDate, $company) 
+    private function searchWorks($startDate, $endDate, $company)
     {
         if($company) {
             $works = Work::whereBetween(DB::raw('DATE(date)'), array($startDate, $endDate))
@@ -42,7 +42,7 @@ class WorkController extends Controller
         }
         return $arrayWorks;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +55,7 @@ class WorkController extends Controller
         $works = Work::all()->where('date','=', $day)->sortBy('time');
         $message = $works->isEmpty() ? 'Sajnos nincs munka!' : '';
         $notes = app('App\Http\Controllers\NoteController')->getNotes($day, $day);
-        
+
         return view('app.works.works', compact('works', 'day', 'dayObj', 'notes', 'message'));
     }
 
@@ -111,7 +111,7 @@ class WorkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
     public function show(Work $work)
@@ -122,7 +122,7 @@ class WorkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
     public function edit(Work $work)
@@ -139,7 +139,7 @@ class WorkController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Work $work)
@@ -178,7 +178,7 @@ class WorkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
     public function destroy(Work $work)
@@ -198,7 +198,7 @@ class WorkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
     public function billing(Work $work)
@@ -212,7 +212,7 @@ class WorkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
     public function showNotBilled()
@@ -231,7 +231,7 @@ class WorkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Work  $work
+     * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
     public function showDrafts()

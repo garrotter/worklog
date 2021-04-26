@@ -25,7 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->string('post_zip', 25)->nullable();
             $table->string('post_city', 144)->nullable();
             $table->string('post_address', 144)->nullable();
-            $table->timestamp('archived_at')->nullable();
+            $table->softDeletes();
         });
     }
 

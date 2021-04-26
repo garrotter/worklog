@@ -1,12 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name', 'phone', 'company_id'
     ];
@@ -42,10 +45,10 @@ class Employee extends Model
 
     public function company()
     {
-        return $this->belongsTo('App\Company', "company_id", "id");
+        return $this->belongsTo('App\Models\Company', 'company_id', 'id');
     }
     public function work()
     {
-        return $this->belongsToMany('App\Work', 'contacts_to_work');
+        return $this->belongsToMany('App\Models\Work', 'contacts_to_work');
     }
 }

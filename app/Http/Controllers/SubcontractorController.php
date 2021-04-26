@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-use App\Subcontractor;
+use App\Models\Subcontractor;
 
 class SubcontractorController extends Controller
 {
@@ -13,7 +13,7 @@ class SubcontractorController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -61,7 +61,7 @@ class SubcontractorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Subcontractor  $subcontractor
+     * @param  \App\Models\Subcontractor  $subcontractor
      * @return \Illuminate\Http\Response
      */
     public function show(Subcontractor $subcontractor)
@@ -72,7 +72,7 @@ class SubcontractorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Subcontractor  $subcontractor
+     * @param  \App\Models\Subcontractor  $subcontractor
      * @return \Illuminate\Http\Response
      */
     public function edit(Subcontractor $subcontractor)
@@ -84,7 +84,7 @@ class SubcontractorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Subcontractor  $subcontractor
+     * @param  \App\Models\Subcontractor  $subcontractor
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Subcontractor $subcontractor)
@@ -105,7 +105,7 @@ class SubcontractorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Subcontractor  $subcontractor
+     * @param  \App\Models\Subcontractor  $subcontractor
      * @return \Illuminate\Http\Response
      */
     public function destroy(Subcontractor $subcontractor)

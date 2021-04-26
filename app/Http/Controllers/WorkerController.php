@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-use App\Worker;
+use App\Models\Worker;
 
 class WorkerController extends Controller
 {
@@ -13,7 +13,7 @@ class WorkerController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -61,7 +61,7 @@ class WorkerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Worker  $worker
+     * @param  \App\Models\Worker  $worker
      * @return \Illuminate\Http\Response
      */
     public function show(Worker $worker)
@@ -72,7 +72,7 @@ class WorkerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Worker  $worker
+     * @param  \App\Models\Worker  $worker
      * @return \Illuminate\Http\Response
      */
     public function edit(Worker $worker)
@@ -84,7 +84,7 @@ class WorkerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Worker  $worker
+     * @param  \App\Models\Worker  $worker
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Worker $worker)
@@ -105,7 +105,7 @@ class WorkerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Worker  $worker
+     * @param  \App\Models\Worker  $worker
      * @return \Illuminate\Http\Response
      */
     public function destroy(Worker $worker)

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-use App\Truck;
+use App\Models\Truck;
 
 class TruckController extends Controller
 {
@@ -13,7 +13,7 @@ class TruckController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +58,7 @@ class TruckController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Truck  $truck
+     * @param  \App\Models\Truck  $truck
      * @return \Illuminate\Http\Response
      */
     public function show(Truck $truck)
@@ -69,7 +69,7 @@ class TruckController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Truck  $truck
+     * @param  \App\Models\Truck  $truck
      * @return \Illuminate\Http\Response
      */
     public function edit(Truck $truck)
@@ -81,7 +81,7 @@ class TruckController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Truck  $truck
+     * @param  \App\Models\Truck  $truck
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Truck $truck)
@@ -99,7 +99,7 @@ class TruckController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Truck  $truck
+     * @param  \App\Models\Truck  $truck
      * @return \Illuminate\Http\Response
      */
     public function destroy(Truck $truck)

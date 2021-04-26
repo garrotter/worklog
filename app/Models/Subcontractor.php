@@ -1,12 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subcontractor extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name'
     ];
@@ -39,9 +42,9 @@ class Subcontractor extends Model
     public function setEmailAttribute($value) {
         $this->attributes['email'] = Crypt::encrypt($value);
     }
-    
+
     public function work()
     {
-        return $this->belongsToMany('App\Work', "subcontractors_to_work", "subcontractor_id", "work_id");
+        return $this->belongsToMany('App\Models\Work', "subcontractors_to_work", "subcontractor_id", "work_id");
     }
 }

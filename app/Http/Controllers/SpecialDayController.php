@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SpecialDay;
+use App\Models\SpecialDay;
 
 class SpecialDayController extends Controller
 {
@@ -11,8 +11,8 @@ class SpecialDayController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function getSpecialDay($day) 
+
+    public function getSpecialDay($day)
     {
         $special = SpecialDay::where('date', '=', $day)->first() ? SpecialDay::where('date', '=', $day)->first()->special : '';
 
